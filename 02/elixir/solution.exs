@@ -21,6 +21,10 @@ defmodule Solution do
     |> IO.inspect()
   end
 
+  defp safe_part_one?(level) do
+    moderately_increasing?(level) or moderately_increasing?(Enum.reverse(level))
+  end
+
   defp safe_part_two?(level) do
     if safe_part_one?(level) do
       true
@@ -31,31 +35,21 @@ defmodule Solution do
     end
   end
 
+  defp moderately_increasing?(level) do
+    levels_firsts = Enum.slice(level, 0..-2//1)
+    levels_lasts = Enum.slice(level, 1..-1//1)
+
+    [levels_firsts, levels_lasts]
+    |> List.zip()
+    |> Enum.all?(fn {l1, l2} -> l2 > l1 and l2 <= l1 + 3 end)
+  end
+
   defp without_index(level, i) do
     level
     |> Enum.with_index()
     |> Enum.filter(fn {_, j} -> i != j end)
     |> Enum.map(fn {elem, _} -> elem end)
   end
-
-  defp safe_part_one?(level) do
-    growth_qualifications = get_growth_qualifications(level)
-
-    Enum.all?(growth_qualifications, &(&1 == :increasing)) or
-      Enum.all?(growth_qualifications, &(&1 == :decreasing))
-  end
-
-  defp get_growth_qualifications(level) do
-    levels_first = Enum.slice(level, 0..-2//1)
-    levels_lasts = Enum.slice(level, 1..-1//1)
-
-    List.zip([levels_first, levels_lasts])
-    |> Enum.map(fn {l1, l2} -> qualify_growth(l2 - l1) end)
-  end
-
-  def qualify_growth(growth) when growth >= 1 and growth <= 3, do: :increasing
-  def qualify_growth(growth) when growth <= -1 and growth >= -3, do: :decreasing
-  def qualify_growth(_), do: :unsafe
 end
 
 path = System.argv() |> Enum.at(0)
