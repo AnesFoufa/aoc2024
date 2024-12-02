@@ -9,16 +9,18 @@ defmodule Solution do
 
   defp solution(path, safe?) do
     path
-    |> File.read!()
-    |> String.split("\n", trim: true)
-    |> Enum.map(fn level ->
-      level
-      |> String.split(" ", trim: true)
-      |> Enum.map(&String.to_integer/1)
-    end)
-    |> Enum.filter(safe?)
-    |> length()
-    |> IO.inspect()
+    |> File.stream!()
+    |> Stream.map(&read_levels/1)
+    |> Stream.filter(safe?)
+    |> Enum.count()
+    |> IO.puts()
+  end
+
+  defp read_levels(line) do
+    line
+    |> String.trim("\n")
+    |> String.split(" ", trim: true)
+    |> Enum.map(&String.to_integer/1)
   end
 
   defp safe_part_one?(level) do
@@ -29,8 +31,8 @@ defmodule Solution do
     if safe_part_one?(level) do
       true
     else
-      0..length(level)
-      |> Enum.map(&without_index(level, &1))
+      0..(length(level) - 1)
+      |> Stream.map(&without_index(level, &1))
       |> Enum.any?(&safe_part_one?/1)
     end
   end
