@@ -10,11 +10,7 @@ def part_two(path):
 
 
 def solution(path, is_safe_func):
-    res = 0
-    for level in read_levels(path):
-        if is_safe_func(level):
-            res += 1
-    print(res)
+    print(sum(is_safe_func(levels) for levels in read_levels(path)))
 
 
 def read_levels(path):
