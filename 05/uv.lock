@@ -1,0 +1,22 @@
+version = 1
+requires-python = ">=3.10"
+
+[[package]]
+name = "05"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "pyswip" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pyswip", specifier = ">=0.3.2" }]
+
+[[package]]
+name = "pyswip"
+version = "0.3.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b3/15/487cfdecb514a14ac8382f7994841346d5c2fa18d3ddbe1108dc5109baa1/pyswip-0.3.2.tar.gz", hash = "sha256:7708c97bb0649b1f4465bebb833e2928389e8760a81dcde2578c87a5b7620fef", size = 35282 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/86/95/cc9bf8920642e10919cb268dc19076bb5fb6290435d0ea254bd5defe68bc/pyswip-0.3.2-py3-none-any.whl", hash = "sha256:88cc837be54ad293f547e4fb3fab7bb997138eaa7c2175781c45fd266ea6a98d", size = 35478 },
+]
